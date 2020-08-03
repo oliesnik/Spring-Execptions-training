@@ -5,18 +5,20 @@ import com.softserve.edu.model.User;
 import com.softserve.edu.service.MarathonService;
 import com.softserve.edu.service.UserService;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 @Data
 public class MarathonController {
@@ -80,8 +82,27 @@ public class MarathonController {
     @GetMapping("/marathons")
     public String getAllMarathons(Model model) {
         List<Marathon> marathons = marathonService.getAll();
+        if (marathons.size() > 2) {
+            throw new RuntimeException("Too many marathons");
+        }
         model.addAttribute("marathons", marathons);
         return "marathons";
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public ModelAndView handleTooManyMarathonsException(HttpServletRequest request, Exception ex) {
+        log.error("Requested URL = {}", request.getRequestURL());
+        log.error("Exception raised = {}", ex.getMessage());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("exception", ex);
+        modelAndView.addObject("path", request.getRequestURL());
+        modelAndView.setViewName("error");
+        return modelAndView;
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public String handleDataIntegrityViolationException() {
+        log.error("DataIntegrityViolationException");
+        return "delete-error";
+    }
 }
