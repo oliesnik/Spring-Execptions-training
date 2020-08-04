@@ -1,5 +1,6 @@
 package com.softserve.edu.controller;
 
+import com.softserve.edu.exception.StudentNotFoundException;
 import com.softserve.edu.model.Marathon;
         import com.softserve.edu.model.User;
         import com.softserve.edu.service.MarathonService;
@@ -93,6 +94,9 @@ public class StudentController {
     public String updateStudent(@PathVariable long id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
+        if(user==null){
+            throw new StudentNotFoundException("Student not found");
+        }
         return "update-student";
     }
 
