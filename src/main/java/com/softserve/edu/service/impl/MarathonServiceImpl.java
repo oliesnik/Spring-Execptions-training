@@ -1,11 +1,11 @@
 package com.softserve.edu.service.impl;
 
-import com.softserve.edu.exception.EntityNotFoundException;
 import com.softserve.edu.model.Marathon;
 import com.softserve.edu.repository.MarathonRepository;
 import com.softserve.edu.service.MarathonService;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.softserve.edu.service.impl;
 
-import com.softserve.edu.exception.EntityNotFoundException;
 import com.softserve.edu.model.Sprint;
 import com.softserve.edu.model.Task;
 import com.softserve.edu.repository.SprintRepository;
@@ -9,6 +8,7 @@ import com.softserve.edu.service.TaskService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Optional;
 

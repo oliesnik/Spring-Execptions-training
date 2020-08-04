@@ -1,6 +1,5 @@
 package com.softserve.edu.service.impl;
 
-import com.softserve.edu.exception.EntityNotFoundException;
 import com.softserve.edu.model.Marathon;
 import com.softserve.edu.model.User;
 import com.softserve.edu.repository.MarathonRepository;
@@ -8,6 +7,7 @@ import com.softserve.edu.repository.UserRepository;
 import com.softserve.edu.service.UserService;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

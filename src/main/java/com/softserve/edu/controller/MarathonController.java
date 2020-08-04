@@ -93,10 +93,9 @@ public class MarathonController {
     public ModelAndView handleTooManyMarathonsException(HttpServletRequest request, Exception ex) {
         log.error("Requested URL = {}", request.getRequestURL());
         log.error("Exception raised = {}", ex.getMessage());
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("error/403");
         modelAndView.addObject("exception", ex);
         modelAndView.addObject("path", request.getRequestURL());
-        modelAndView.setViewName("error");
         return modelAndView;
     }
 

@@ -1,7 +1,5 @@
 package com.softserve.edu.service.impl;
 
-
-import com.softserve.edu.exception.EntityNotFoundException;
 import com.softserve.edu.model.Progress;
 import com.softserve.edu.model.Task;
 import com.softserve.edu.model.User;
@@ -13,6 +11,7 @@ import com.softserve.edu.service.ProgressService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;

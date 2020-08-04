@@ -1,6 +1,5 @@
 package com.softserve.edu;
 
-import com.softserve.edu.exception.EntityNotFoundException;
 import com.softserve.edu.model.Marathon;
 import com.softserve.edu.model.User;
 import com.softserve.edu.repository.MarathonRepository;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
