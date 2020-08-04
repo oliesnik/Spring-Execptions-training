@@ -26,9 +26,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ModelAndView handleTooManyMarathonsException(RuntimeException ex) {
-        ModelAndView modelAndView = new ModelAndView("error/error");
+        ModelAndView modelAndView = new ModelAndView("error/403");
         modelAndView.addObject("info", ex.getMessage());
         modelAndView.setStatus(HttpStatus.METHOD_NOT_ALLOWED);
+        return modelAndView;
+    }
+
+    @ExceptionHandler(StudentNotFoundException.class)
+    public ModelAndView handleStudentNotFoundException(Exception ex) {
+        ModelAndView modelAndView = new ModelAndView("error/404", HttpStatus.NOT_FOUND);
+        modelAndView.addObject("info", ex.getMessage());
         return modelAndView;
     }
 }
