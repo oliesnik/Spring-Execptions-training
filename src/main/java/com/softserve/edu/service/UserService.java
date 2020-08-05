@@ -11,6 +11,7 @@ public interface UserService {
     User createOrUpdateUser( User user);
     void deleteUserById(Long id);
     List<User> getAllByRole(String role);
+    User findUserByEmail(String email);
     boolean addUserToMarathon(User user, Marathon marathon);
     boolean deleteUserFromMarathon(User user, Marathon marathon);
 }

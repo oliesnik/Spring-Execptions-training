@@ -25,7 +25,6 @@ public class StudentController {
 
     private UserService userService;
     private MarathonService marathonService;
-    private UserRepository userRepository;
 
     public StudentController(UserService userService, MarathonService marathonService) {
         this.userService = userService;
@@ -42,12 +41,12 @@ public class StudentController {
     @PostMapping("/students/{marathon_id}/add")
     public String createStudent(@PathVariable("marathon_id") long marathonId, @Validated @ModelAttribute User user, BindingResult result) {
         logger.info("Adding student to marathon");
+        User existed = userService.findUserByEmail(user.getEmail());
+        if (existed!=null){
+            throw new StudentAlreadyExistsException("Student with such email already exists!");
+        }
         if (result.hasErrors()) {
             return "create-student";
-        }
-        User existed = userRepository.findUserByEmail(user.getEmail());
-        if (existed.getEmail().equals(user.getEmail())){
-            throw new StudentAlreadyExistsException("Student with such email already exists!");
         }
         userService.addUserToMarathon(
                 userService.createOrUpdateUser(user),
