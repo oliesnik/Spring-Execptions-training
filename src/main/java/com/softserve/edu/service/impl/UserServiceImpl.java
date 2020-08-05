@@ -40,6 +40,9 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(("No user /w id " + id)));
     }
+    public User findUserByEmail(String email){
+        return userRepository.findUserByEmail(email);
+    }
 
     @Override
     public User createOrUpdateUser(User entity) {
