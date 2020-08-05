@@ -1,5 +1,6 @@
 package com.softserve.edu.controller;
 
+import com.softserve.edu.exception.ManyMarathonsException;
 import com.softserve.edu.model.Marathon;
 import com.softserve.edu.model.User;
 import com.softserve.edu.service.MarathonService;
@@ -7,6 +8,7 @@ import com.softserve.edu.service.UserService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -83,19 +85,19 @@ public class MarathonController {
     public String getAllMarathons(Model model) {
         List<Marathon> marathons = marathonService.getAll();
         if (marathons.size() > 2) {
-            throw new RuntimeException("Too many marathons");
+            throw new ManyMarathonsException("Too many marathons");
         }
         model.addAttribute("marathons", marathons);
         return "marathons";
     }
 
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(ManyMarathonsException.class)
     public ModelAndView handleTooManyMarathonsException(HttpServletRequest request, Exception ex) {
         log.error("Requested URL = {}", request.getRequestURL());
         log.error("Exception raised = {}", ex.getMessage());
-        ModelAndView modelAndView = new ModelAndView("error/403");
-        modelAndView.addObject("exception", ex);
-        modelAndView.addObject("path", request.getRequestURL());
+        ModelAndView modelAndView = new ModelAndView("error/error", HttpStatus.METHOD_NOT_ALLOWED);
+        modelAndView.addObject("info", ex.getMessage());
+ //       modelAndView.addObject("path", request.getRequestURL());
         return modelAndView;
     }
 

@@ -1,5 +1,6 @@
 package com.softserve.edu.service.impl;
 
+import com.softserve.edu.exception.StudentNotFoundException;
 import com.softserve.edu.model.Marathon;
 import com.softserve.edu.model.User;
 import com.softserve.edu.repository.MarathonRepository;
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(("No user /w id " + id)));
+        return userRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(("No user with id: " + id)));
     }
     public User findUserByEmail(String email){
         return userRepository.findUserByEmail(email);

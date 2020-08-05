@@ -18,23 +18,23 @@ public class GlobalExceptionHandler {
         return "Illegal-argument-exception";
     }
 
-    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "EntityNotFoundException occurred")
-    @ExceptionHandler(javax.persistence.EntityNotFoundException.class)
-    public void handleEntityNotFoundException() {
-        log.warn("Entity not found Exception raised");
-    }
+//    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "EntityNotFoundException occurred")
+//    @ExceptionHandler(javax.persistence.EntityNotFoundException.class)
+//    public void handleEntityNotFoundException() {
+//        log.warn("Entity not found Exception raised");
+//    }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ModelAndView handleTooManyMarathonsException(RuntimeException ex) {
-        ModelAndView modelAndView = new ModelAndView("error/403");
-        modelAndView.addObject("info", ex.getMessage());
-        modelAndView.setStatus(HttpStatus.METHOD_NOT_ALLOWED);
-        return modelAndView;
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public ModelAndView handleTooManyMarathonsException(RuntimeException ex) {
+//        ModelAndView modelAndView = new ModelAndView("error/403");
+//        modelAndView.addObject("info", ex.getMessage());
+//        modelAndView.setStatus(HttpStatus.METHOD_NOT_ALLOWED);
+//        return modelAndView;
+//    }
 
     @ExceptionHandler(StudentNotFoundException.class)
     public ModelAndView handleStudentNotFoundException(Exception ex) {
-        ModelAndView modelAndView = new ModelAndView("error/404", HttpStatus.NOT_FOUND);
+        ModelAndView modelAndView = new ModelAndView("error/error", HttpStatus.NOT_FOUND);
         modelAndView.addObject("info", ex.getMessage());
         return modelAndView;
     }

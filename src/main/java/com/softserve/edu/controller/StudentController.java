@@ -100,9 +100,6 @@ public class StudentController {
     public String updateStudent(@PathVariable long id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
-        if (user == null) {
-            throw new StudentNotFoundException("Student not found");
-        }
         return "update-student";
     }
 
