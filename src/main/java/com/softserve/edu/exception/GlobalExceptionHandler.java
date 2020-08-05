@@ -38,4 +38,11 @@ public class GlobalExceptionHandler {
         modelAndView.addObject("info", ex.getMessage());
         return modelAndView;
     }
+
+    @ExceptionHandler(StudentAlreadyExistsException.class)
+    public ModelAndView handleStudentExistsException(Exception exception){
+        ModelAndView model = new ModelAndView("error/error", HttpStatus.BAD_REQUEST);
+        model.addObject("info", exception.getMessage());
+        return model;
+    }
 }

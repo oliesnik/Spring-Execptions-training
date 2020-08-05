@@ -1,20 +1,22 @@
 package com.softserve.edu.controller;
 
+import com.softserve.edu.exception.StudentAlreadyExistsException;
 import com.softserve.edu.exception.StudentNotFoundException;
 import com.softserve.edu.model.Marathon;
-        import com.softserve.edu.model.User;
-        import com.softserve.edu.service.MarathonService;
-        import com.softserve.edu.service.UserService;
-        import lombok.Data;
-        import org.slf4j.Logger;
-        import org.slf4j.LoggerFactory;
-        import org.springframework.stereotype.Controller;
-        import org.springframework.ui.Model;
-        import org.springframework.validation.BindingResult;
-        import org.springframework.validation.annotation.Validated;
-        import org.springframework.web.bind.annotation.*;
+import com.softserve.edu.model.User;
+import com.softserve.edu.repository.UserRepository;
+import com.softserve.edu.service.MarathonService;
+import com.softserve.edu.service.UserService;
+import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-        import java.util.List;
+import java.util.List;
 
 @Controller
 @Data
@@ -23,6 +25,7 @@ public class StudentController {
 
     private UserService userService;
     private MarathonService marathonService;
+    private UserRepository userRepository;
 
     public StudentController(UserService userService, MarathonService marathonService) {
         this.userService = userService;
@@ -41,6 +44,10 @@ public class StudentController {
         logger.info("Adding student to marathon");
         if (result.hasErrors()) {
             return "create-student";
+        }
+        User existed = userRepository.findUserByEmail(user.getEmail());
+        if (existed.getEmail().equals(user.getEmail())){
+            throw new StudentAlreadyExistsException("Student with such email already exists!");
         }
         userService.addUserToMarathon(
                 userService.createOrUpdateUser(user),
@@ -94,7 +101,7 @@ public class StudentController {
     public String updateStudent(@PathVariable long id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
-        if(user==null){
+        if (user == null) {
             throw new StudentNotFoundException("Student not found");
         }
         return "update-student";

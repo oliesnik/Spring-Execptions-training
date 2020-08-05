@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>Error page</title>
+</head>
+<body>
+<div th:insert="~{header :: menu}"/>
+<h1>Ooops, Something wrong</h1>
+<p></p>
+<h1>Error info:</h1>
+<div th:text="${info}"></div>
+</body>
+</html>

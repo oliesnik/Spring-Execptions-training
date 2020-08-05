@@ -38,14 +38,14 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(("No user /w id "+id)));
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(("No user /w id " + id)));
     }
 
     @Override
     public User createOrUpdateUser(User entity) {
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<User>> violations = validator.validate(entity);
-        if(!violations.isEmpty()){
+        if (!violations.isEmpty()) {
             throw new RuntimeException(violations.toString());
         }
         if (entity.getId() != null) {
